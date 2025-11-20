@@ -8,6 +8,11 @@ greet.get('/regards', async (c) => c.json(
     await Greet.findAll()
 ))
 
+// Nuevo Endpoint GET STATS
+greet.get('/greet/stats', async (c) =>
+  c.json(await Greet.stats())
+)
+
 greet.get('/greet/:id', async (c) => c.json(
     await Greet.findById(Number(c.req.param('id')))
 ))
@@ -33,9 +38,6 @@ greet.delete('/greet/:id', async (c) => {
   return c.json({ deleted: result })
 })
 
-// Nuevo Endpoint GET STATS
-greet.get('/greet/stats', async (c) =>
-  c.json(await Greet.stats())
-)
+
 
 export default greet

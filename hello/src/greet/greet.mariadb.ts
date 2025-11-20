@@ -87,16 +87,22 @@ export class Greet {
     static async stats() {
       const total = await connection.query(
         'SELECT COUNT(*) AS total FROM regards'
-      )
+      );
 
       const byLanguage = await connection.query(
         'SELECT language, COUNT(*) AS count FROM regards GROUP BY language'
-      )
+      );
 
       return {
-        total: total[0].total,
-        byLanguage
-      }
+        total: Number(total[0].total),
+
+        // @ts-ignore
+        byLanguage: byLanguage.map(row => ({
+          language: row.language,
+          count: Number(row.count)
+        }))
+      };
     }
+
     
   }
